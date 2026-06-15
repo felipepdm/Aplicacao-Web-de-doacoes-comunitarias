@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mutirão Solidário - Conjunto Dom Helder Câmara</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="topo">
+      <div>
+        <h1>Mutirão Solidário</h1>
+        <div class="subtitulo">Conjunto Dom Helder Câmara - Candeias, Jaboatão dos Guararapes</div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="cadastrar-doacao.html">Doar um item</a></li>
+          <li><a href="cadastrar-solicitacao.html">Pedir um item</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="intro">
+      <h2>Como funciona</h2>
+      <p>Este site existe para aproximar quem pode doar de quem precisa, dentro da nossa comunidade. Quem tem roupas, alimentos, utensílios ou material escolar para doar pode cadastrar o item na página "Doar um item". Quem precisa de algum desses itens pode registrar o pedido na página "Pedir um item".</p>
+      <p>As listas abaixo mostram o que está disponível para doação e o que a comunidade está precisando no momento.</p>
+    </div>
+
+    <section class="lista">
+      <h2>Doações disponíveis</h2>
+      <div id="lista-doacoes">
+        <p class="estado-vazio">Carregando doações...</p>
+      </div>
+    </section>
+
+    <section class="lista">
+      <h2>Pedidos da comunidade</h2>
+      <div id="lista-solicitacoes">
+        <p class="estado-vazio">Carregando pedidos...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Mutirão Solidário &mdash; um projeto comunitário do Conjunto Dom Helder Câmara, Candeias, Jaboatão dos Guararapes - PE.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      listarDoacoes();
+      listarSolicitacoes();
+    });
+  </script>
+</body>
+</html>
