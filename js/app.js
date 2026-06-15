@@ -10,25 +10,18 @@ function mostrarMensagem(texto, tipo) {
   elemento.className = "mensagem " + tipo;
 }
 
-// Procura um usuário pelo telefone; se não existir, cria um novo
+// Procura um usuário pelo telefone; se não existir, cria um novo.
+// Essa busca/criação é feita por uma função do banco (RPC), que
+// roda "por dentro" do Supabase, sem expor a tabela "usuarios"
+// (que contém nome e telefone) para leitura pública.
 async function buscarOuCriarUsuario(nome, telefone) {
-  const { data: existente, error: erroBusca } = await supabaseClient
-    .from("usuarios")
-    .select("id")
-    .eq("telefone", telefone)
-    .maybeSingle();
+  const { data, error } = await supabaseClient.rpc("obter_ou_criar_usuario", {
+    p_nome: nome,
+    p_telefone: telefone
+  });
 
-  if (erroBusca) throw erroBusca;
-  if (existente) return existente.id;
-
-  const { data: novo, error: erroCriacao } = await supabaseClient
-    .from("usuarios")
-    .insert({ nome: nome, telefone: telefone })
-    .select("id")
-    .single();
-
-  if (erroCriacao) throw erroCriacao;
-  return novo.id;
+  if (error) throw error;
+  return data;
 }
 
 // Cadastra uma nova doação

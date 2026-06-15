@@ -1,5 +1,5 @@
 -- ============================================
--- Banco de dados - Desenvolver site para doações comunitárias
+-- Banco de dados - Mutirão Solidário
 -- Conjunto Dom Helder Câmara - Candeias/PE
 -- ============================================
 -- Execute este script no SQL Editor do Supabase
@@ -49,10 +49,32 @@ alter table usuarios enable row level security;
 alter table doacoes enable row level security;
 alter table solicitacoes enable row level security;
 
-create policy "permitir leitura publica usuarios" on usuarios
-  for select using (true);
-create policy "permitir insercao publica usuarios" on usuarios
-  for insert with check (true);
+-- A tabela "usuarios" guarda nome e telefone das pessoas, então
+-- NÃO criamos políticas de leitura/escrita pública para ela.
+-- Em vez disso, o site usa a função abaixo, que busca ou cria
+-- o usuário "por dentro" do banco, sem expor a tabela.
+
+create or replace function obter_ou_criar_usuario(p_nome text, p_telefone text)
+returns uuid
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_id uuid;
+begin
+  select id into v_id from usuarios where telefone = p_telefone limit 1;
+
+  if v_id is null then
+    insert into usuarios (nome, telefone) values (p_nome, p_telefone)
+    returning id into v_id;
+  end if;
+
+  return v_id;
+end;
+$$;
+
+grant execute on function obter_ou_criar_usuario(text, text) to anon;
 
 create policy "permitir leitura publica doacoes" on doacoes
   for select using (true);
