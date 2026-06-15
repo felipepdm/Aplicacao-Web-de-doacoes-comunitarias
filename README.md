@@ -13,14 +13,6 @@ Conjunto Dom Helder Câmara, Candeias, Jaboatão dos Guararapes - PE.
 - `js/app.js` - funções de cadastro e listagem de doações e solicitações
 - `sql/schema.sql` - script para criar as tabelas no Supabase
 
-## Como configurar
-
-1. Crie um projeto gratuito em https://supabase.com
-2. No SQL Editor do Supabase, execute o conteúdo do arquivo `sql/schema.sql`
-3. Em "Project Settings > API", copie a "Project URL" e a chave "anon public"
-4. Abra `js/supabase-config.js` e substitua `SUPABASE_URL` e `SUPABASE_ANON_KEY` pelos valores copiados
-5. Abra `index.html` em um navegador (ou hospede o projeto, por exemplo, no GitHub Pages)
-
 ## Próximas etapas
 
 Esta versão corresponde à fase de Projeto. Nas fases de Análise e
